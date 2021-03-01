@@ -24,7 +24,12 @@ db.create_all()
 @app.route('/')
 def hello_world():
     return render_template('first.html')
-
+@app.route('/admin')
+def admin():
+    return render_template('dash.html')
+@app.route('/admin/signin')
+def login():
+    return render_template('dashboard/login.html')
 
 if __name__ == '__main__':
     app.run(debug=True,port=3000)
