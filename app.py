@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request, redirect , url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -37,6 +37,7 @@ def admin():
         task = Task(taskname=task,leader=leader,status=status,event=event)
         db.session.add(task)
         db.session.commit()
+        return redirect(url_for('admin'))
     tasks = Task.query.all()
     if tasks != None:
         return render_template('dash.html',tasklist = tasks)
