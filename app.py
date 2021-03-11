@@ -12,6 +12,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     taskname = db.Column(db.String(80), unique=True, nullable=False)
     leader =  db.Column(db.String(80), nullable=False)
+
     # status = db.relationship('Employee', uselist=False, backref='task')
     status = db.Column(db.String(80),  nullable=False)
     event = db.Column(db.String(80),  nullable=False)
@@ -24,7 +25,7 @@ class Task(db.Model):
 #     taskname = db.Column(db.String(80), unique=True, nullable=False)
 
 db.create_all()
-@app.route('/')
+@app.route('/',methods=['GET','POST'])
 def hello_world():
     return render_template('first.html')
 @app.route('/admin', methods=['GET','POST'])
@@ -34,7 +35,9 @@ def admin():
         leader = request.form['leader']
         status = request.form['status']
         event = request.form['event']
-        task = Task(taskname=task,leader=leader,status=status,event=event)
+
+        # CURRENCY = request.form['']
+        task = Task(taskname=task,leader=leader,status=status,event=event )
         db.session.add(task)
         db.session.commit()
         return redirect(url_for('admin'))
@@ -43,6 +46,13 @@ def admin():
         return render_template('dash.html',tasklist = tasks)
     else:
         return render_template('dash.html')
+@app.route('/admin/task/delete/<id>')
+def deletetask(id):
+    #remove task using task id
+    Task.query.filter_by(id=id).delete()
+    # commit using to perform query to database
+    db.session.commit()
+    return redirect(url_for('admin'))
 @app.route('/admin/signin')
 def login():
     return render_template('dashboard/login.html')

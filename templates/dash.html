@@ -17,6 +17,29 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href={{ url_for('static',filename='assets/css/argon.css')}} type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+<style>
+    .navbar-brand{
+        display: flex;
+        max-height: 100px;
+        min-width: 100%;
+        margin-bottom: 200px;
+          justify-content: center;
+  align-items: center;
+    }
+    .navbar-brand img{
+        margin-top: 100px;
+        min-width:100px !important;
+        min-height: 100px !important;
+        border-radius: 50%;
+    }
+    .navbar-inner{
+        margin-top: 100px;
+    }
+
+</style>
 </head>
 
 <body >
@@ -25,7 +48,7 @@
     <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" href="javascript:void(0)">
+        <a class="navbar-brand mylogo" href="javascript:void(0)">
           <img src="{{ url_for('static',filename='assets/img/brand/blue.png')}}" class="navbar-brand-img" alt="...">
         </a>
       </div>
@@ -36,19 +59,20 @@
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link active" href="examples/dashboard.html">
-                <i class="ni ni-tv-2 text-primary"></i>
+                <span class="material-icons" style="color: deeppink">meeting_room</span>
                 <span class="nav-link-text">Dashboard</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="examples/icons.html">
-                <i class="ni ni-planet text-orange"></i>
+{#                <i class="ni ni-world text-orange"></i>#}
+                <img width="45px" height="20px" src="{{ url_for('static', filename='images/logo-hosting.png') }}" >
                 <span class="nav-link-text">Icons</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="examples/map.html">
-                <i class="ni ni-pin-3 text-primary"></i>
+                <i class="fa fa-handshake text-primary"></i>
                 <span class="nav-link-text">Google</span>
               </a>
             </li>
@@ -575,6 +599,14 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
+                      <th scope="col" style="color: black; font-size: 16px">  <center>
+                          احداث
+                      </center>
+
+
+
+
+                      </th>
                        <th scope="col" style="color: black; font-size: 16px"> اخر تحديث </th>
                            <th scope="col" style="color: black; font-size:  16px">  الحاله </th>
                                  <th scope="col" style="color: black ; font-size:  16px"> المسؤول </th>
@@ -589,6 +621,22 @@
                 <tbody>
                 {% for taskm in tasklist %}
                   <tr>
+                                      <th scope="row">
+                                          <center>
+
+
+                     <button class="btn btn-primary">
+                                  <span class="material-icons" style="color: white">
+edit
+</span>
+                     </button>
+                                            <a href="{{ url_for('deletetask',id=taskm['id']) }}" class="btn btn-danger">
+                         <span class="material-icons" style="color: white">
+delete
+</span>
+                     </a>
+                                               </center>
+                    </th>
                     <th scope="row">
                      {{ taskm['event'] }}
                     </th>
