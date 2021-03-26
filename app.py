@@ -25,10 +25,7 @@ class Task(db.Model):
 #     taskname = db.Column(db.String(80), unique=True, nullable=False)
 
 db.create_all()
-@app.route('/',methods=['GET','POST'])
-def hello_world():
-    return render_template('first.html')
-@app.route('/admin', methods=['GET','POST'])
+@app.route('/', methods=['GET','POST'])
 def admin():
     if request.method == 'POST':
         task = request.form['task']
@@ -48,6 +45,13 @@ def admin():
         return render_template('dash.html')
 @app.route('/admin/task/delete/<id>')
 def deletetask(id):
+    #remove task using task id
+    Task.query.filter_by(id=id).delete()
+    # commit using to perform query to database
+    db.session.commit()
+    return redirect(url_for('admin'))
+@app.route('/admin/task/edit/<id>')
+def edittask(id):
     #remove task using task id
     Task.query.filter_by(id=id).delete()
     # commit using to perform query to database
