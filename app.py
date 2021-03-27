@@ -1,5 +1,6 @@
 from flask import Flask,render_template,request, redirect , url_for
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
@@ -39,8 +40,9 @@ def admin():
         db.session.commit()
         return redirect(url_for('admin'))
     tasks = Task.query.all()
+    today = datetime.today()
     if tasks != None:
-        return render_template('dash.html',tasklist = tasks)
+        return render_template('dash.html',tasklist = tasks, year = today.year)
     else:
         return render_template('dash.html')
 @app.route('/admin/task/delete/<id>')
@@ -50,13 +52,18 @@ def deletetask(id):
     # commit using to perform query to database
     db.session.commit()
     return redirect(url_for('admin'))
-@app.route('/admin/task/edit/<id>')
+@app.route('/admin/task/edit/<id>' , methods=['GET','POST'])
 def edittask(id):
-    #remove task using task id
-    Task.query.filter_by(id=id).delete()
-    # commit using to perform query to database
-    db.session.commit()
-    return redirect(url_for('admin'))
+    if request.method == 'POST':
+        print("hello",id)
+        task = Task.query.filter_by(id=id).first()
+        task.taskname = request.form['taskname']
+        task.leader = request.form['leader']
+        task.status = request.form['status']
+        task.event = request.form['event']
+        db.session.commit()
+        return redirect(url_for('admin'))
+
 @app.route('/admin/signin')
 def login():
     return render_template('dashboard/login.html')

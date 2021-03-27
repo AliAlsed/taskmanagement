@@ -583,7 +583,7 @@
                                 <th scope="col" style="color: black; font-size:  16px"> الحاله</th>
                                 <th scope="col" style="color: black ; font-size:  16px"> المسؤول</th>
                                 <th scope="col" style="color: black ; font-size:  16px"> البند</th>
-
+                                <th scope="col" style="color: black ; font-size:  16px"> الرقم </th>
 
                             </tr>
 
@@ -620,6 +620,9 @@ delete
                                     <td>
                                         {{ taskm['taskname'] }}
                                     </td>
+                                   <td>
+                                    {{ year }} -   {{ taskm['id'] }}
+                                    </td>
                                 </tr>
                                  <div id="modaledit{{taskm['id']}}" class="modal fade" role="dialog">
    <div class="modal-dialog">
@@ -640,7 +643,7 @@ delete
          <div class="modal-body">
 
 
-            <form action="{{url_for('edittask',id=taskm['id'])}}" method="POST">
+            <form method="POST" action="{{url_for('edittask',id=taskm['id'])}}" >
 
 
                <div class="form-group">
@@ -649,7 +652,7 @@ delete
                   <label>البند:</label>
                    <input type="hidden"  name="id" value="{{taskm['id']}}">
 
-                  <input type="text" class="form-control" name="name" value="{{taskm['taskname']}}">
+                  <input type="text" class="form-control" name="taskname" value="{{taskm['taskname']}}">
 
 
                </div>
@@ -661,7 +664,7 @@ delete
 
                   <label>المسؤول:</label>
 
-                  <input type="text" class="form-control" name="email" value="{{taskm['leader']}}">
+                  <input type="text" class="form-control" name="leader" value="{{taskm['leader']}}">
 
 
                </div>
@@ -672,7 +675,7 @@ delete
 
                   <label>الحاله:</label>
 
-                  <input type="text" class="form-control" name="phone" value="{{taskm['status']}}">
+                  <input type="text" class="form-control" name="status" value="{{taskm['status']}}">
 
 
                </div>
@@ -682,7 +685,7 @@ delete
 
                   <label>اخر تحديث:</label>
 
-                  <input type="text" class="form-control" name="phone" value="{{taskm['status']}}">
+                  <input type="text" class="form-control" name="event" value="{{taskm['status']}}">
 
 
                </div>
@@ -690,7 +693,8 @@ delete
                <div class="form-group">
 
 
-                  <button class="btn btn-primary" type="submit">Update</button>
+                  <button class="btn btn-primary" type="submit">تحديث</button>
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
 
 
                </div>
@@ -705,7 +709,6 @@ delete
          <div class="modal-footer">
 
 
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
 
          </div>
